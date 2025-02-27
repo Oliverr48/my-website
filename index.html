@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oliver's Portfolio</title>
+    <style>
+        /* Modern Reset */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        /* Animation Classes */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .fade-in.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .slide-in-left.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .slide-in-right.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .scale-in {
+            opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .scale-in.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Variables */
+        :root {
+            --primary: #212121;
+            --yellow: #FFE14D;
+            --pink: #E0B0B0;
+            --green: #A0E0A0;
+            --dark: #212121;
+            --light: #f8f9fa;
+            --sidebar-width: 70px;
+            --sidebar-hover-width: 75px;
+            --transition: all 0.3s ease;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --shadow-strong: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Base Styles */
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--yellow);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Browser Mock - Removed */
+
+        /* Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 5;
+        }
+
+        /* Left Sidebar */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: var(--sidebar-width);
+            height: 100vh;
+            background-color: #212121;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 80px;
+            z-index: 100;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+        
+        .sidebar:hover {
+            width: var(--sidebar-hover-width);
+        }
+        
+        .sidebar-icon {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-bottom: 25px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            background-color: rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+        
+        .sidebar-icon:hover {
+            background-color: var(--yellow);
+            color: #212121;
+            transform: scale(1.15) translateX(5px);
+            box-shadow: 0 5px 15px rgba(255, 225, 77, 0.3);
+        }
+        
+        .sidebar-icon .tooltip {
+            position: absolute;
+            left: 60px;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #212121;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            opacity: 0;
+            transform: translateX(-10px);
+            pointer-events: none;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        
+        .sidebar-icon:hover .tooltip {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Header */
+        header {
+            padding: 20px 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            text-align: center;
+            font-weight: 700;
+            color: var(--dark);
+            font-size: 1.5rem;
+            position: relative;
+            line-height: 1.2;
+            transition: var(--transition);
+            perspective: 1000px;
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .logo-top {
+            text-transform: uppercase;
+            transition: transform 0.5s ease;
+        }
+        
+        .logo:hover .logo-top {
+            transform: rotateX(360deg);
+        }
+
+        .action-text {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--dark);
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+        
+        .action-text:hover {
+            transform: scale(1.1) rotate(5deg);
+            color: #FF5F56;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 100px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 12vw;
+            font-weight: 900;
+            line-height: 1;
+            color: var(--dark);
+            text-transform: uppercase;
+            margin-bottom: 50px;
+            transition: var(--transition);
+            text-shadow: 0 0 0 rgba(0, 0, 0, 0);
+        }
+        
+        .hero h1:hover {
+            letter-spacing: 0.05em;
+            text-shadow: 5px 5px 0 rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 40px 0;
+        }
+        
+        .pagination-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        
+        .pagination-dot:hover {
+            transform: scale(1.5);
+        }
+        
+        .pagination-dot.active {
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            background-color: #212121;
+            color: white;
+            padding: 12px 25px;
+            font-weight: 600;
+            text-transform: uppercase;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--yellow);
+            z-index: -2;
+        }
+        
+        .btn:before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 100%;
+            background-color: #FF5F56;
+            transition: all 0.3s;
+            z-index: -1;
+        }
+        
+        .btn:hover {
+            color: white;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn:hover:before {
+            width: 100%;
+        }
+        
+        .btn .arrow {
+            margin-left: 10px;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+        
+        .btn:hover .arrow {
+            transform: translateY(5px);
+        }
+        
+        .btn.yellow-btn {
+            background-color: var(--yellow);
+            color: var(--dark);
+        }
+        
+        .btn.yellow-btn:after {
+            background-color: var(--dark);
+        }
+        
+        .btn.yellow-btn:hover {
+            color: white;
+        }
+        
+        .buy-tickets-btn {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            background-color: #212121;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 0;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .buy-tickets-btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: 0.5s;
+        }
+        
+        .buy-tickets-btn:hover {
+            background-color: #FF5F56;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .buy-tickets-btn:hover:before {
+            left: 100%;
+        }
+
+        /* Projects/Exhibitions Section */
+        .projects {
+            padding: 30px 0 60px;
+            background-color: var(--pink);
+            position: relative;
+            z-index: 10;
+            margin-top: 40px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+
+        .section-header .btn {
+            font-size: 1.2rem;
+            background-color: var(--yellow);
+            color: var(--dark);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 0 60px;
+        }
+
+        /* Project Card 3D Flip Effect */
+        .project-card-container {
+            perspective: 1000px;
+            height: 350px;
+            position: relative;
+            margin-bottom: 15px;
+        }
+        
+        .project-card-front, .project-card-back {
+            position: absolute;
+            top: 0; 
+            left: 0;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border: 8px solid var(--green);
+            overflow: hidden;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background-color: white;
+        }
+
+        /* Front Card */
+        .project-card-front {
+            transform: rotateY(0deg);
+            z-index: 2;
+        }
+
+        /* Back Card */
+        .project-card-back {
+            transform: rotateY(180deg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 1.5rem;
+            background-color: var(--dark);
+            color: white;
+        }
+
+        /* Flip Animation */
+        .project-card-container:hover .project-card-front {
+            transform: rotateY(180deg);
+        }
+
+        .project-card-container:hover .project-card-back {
+            transform: rotateY(360deg);
+        }
+        
+        .project-image {
+            height: 100%;
+            width: 100%;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        /* Back card content */
+        .project-card-back h3 {
+            margin-bottom: 0.75rem;
+            font-size: 1.6rem;
+        }
+
+        .project-card-back p {
+            margin-bottom: 1rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1rem;
+        }
+
+        .back-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 0.5rem 0 1rem;
+            justify-content: center;
+        }
+        
+        .back-tags span {
+            padding: 0.3rem 0.8rem;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        /* Award Badge - Removed */
+
+        /* 3D Rotating Cube Animation */
+        .cube-container {
+            position: fixed;
+            width: 80px;
+            height: 80px;
+            perspective: 1000px;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.5;
+        }
+        
+        .cube {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: rotateCube 20s infinite linear;
+        }
+        
+        .cube-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .cube-face:nth-child(1) { transform: rotateY(0deg) translateZ(40px); }
+        .cube-face:nth-child(2) { transform: rotateY(90deg) translateZ(40px); }
+        .cube-face:nth-child(3) { transform: rotateY(180deg) translateZ(40px); }
+        .cube-face:nth-child(4) { transform: rotateY(-90deg) translateZ(40px); }
+        .cube-face:nth-child(5) { transform: rotateX(90deg) translateZ(40px); }
+        .cube-face:nth-child(6) { transform: rotateX(-90deg) translateZ(40px); }
+        
+        @keyframes rotateCube {
+            0% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
+            100% { transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .projects-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                padding: 0 20px 0 80px;
+            }
+            
+            .hero h1 {
+                font-size: 15vw;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+                padding: 0 20px 0 80px;
+            }
+            
+            .award-badge {
+                width: 120px;
+                height: 120px;
+                left: 70px;
+                bottom: 10px;
+            }
+            
+            .badge-content {
+                font-size: 0.6rem;
+                padding: 10px;
+            }
+            
+            .badge-year {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Cubes -->
+    <div class="cube-container" style="top: 15%; right: 10%;">
+        <div class="cube">
+            <div class="cube-face"></div>
+            <div class="cube-face"></div>
+            <div class="cube-face"></div>
+            <div class="cube-face"></div>
+            <div class="cube-face"></div>
+            <div class="cube-face"></div>
+        </div>
+    </div>
+    
+    <div class="cube-container" style="top: 60%; right: 20%;">
+        <div class="cube" style="animation-duration: 25s;">
+            <div class="cube-face"></div>
+            <div class="cube-face"></div>
+            <div class="cube-face"></div>
+            <div class="cube-face"></div>
+            <div class="cube-face"></div>
+            <div class="cube-face"></div>
+        </div>
+    </div>
+    
+    <!-- Browser mock removed as requested -->
+    
+    <!-- Left Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-icon">
+            📅
+            <span class="tooltip">Calendar</span>
+        </div>
+        <div class="sidebar-icon">
+            🎟️
+            <span class="tooltip">Tickets</span>
+        </div>
+        <div class="sidebar-icon">
+            🔍
+            <span class="tooltip">Search</span>
+        </div>
+        <div class="sidebar-icon">
+            📍
+            <span class="tooltip">Location</span>
+        </div>
+        <div class="sidebar-icon">
+            ≡
+            <span class="tooltip">Menu</span>
+        </div>
+    </div>
+
+    <div style="margin-left: var(--sidebar-width);">
+        <header class="container">
+            <a href="#projects" class="buy-tickets-btn slide-in-left">view all my projects</a>
+            <div class="logo scale-in">
+                <div class="logo-top">Oliver<span style="color: var(--primary);">.</span></div>
+            </div>
+            <div class="action-text slide-in-right">PLAY</div>
+        </header>
+
+        <section class="hero container">
+            <h1 class="fade-in">WELCOME</h1>
+            
+            <div class="pagination">
+                <div class="pagination-dot"></div>
+                <div class="pagination-dot active"></div>
+                <div class="pagination-dot"></div>
+            </div>
+            
+            <div>
+                <a href="#projects" class="btn scale-in">FEATURED PROJECTS <span class="arrow">↓</span></a>
+            </div>
+        </section>
+
+        <section class="projects" id="projects">
+            <div class="section-header">
+                <a href="#" class="btn yellow-btn fade-in">ALL PROJECTS <span class="arrow">→</span></a>
+            </div>
+
+            <div class="projects-grid">
+                <div class="project-card-container fade-in">
+                    <div class="project-card-front">
+                        <div class="project-image">
+                            <img src="images/weather-app.jpg" alt="Weather App">
+                        </div>
+                    </div>
+                    <div class="project-card-back">
+                        <h3>Weather Forecast App</h3>
+                        <p>A sleek, responsive weather application providing real-time forecasts and data visualization.</p>
+                        <div class="back-tags">
+                            <span>React</span>
+                            <span>Weather API</span>
+                            <span>Tailwind CSS</span>
+                        </div>
+                        <a href="#" class="btn">View Details</a>
+                    </div>
+                </div>
+
+                <div class="project-card-container fade-in">
+                    <div class="project-card-front">
+                        <div class="project-image">
+                            <img src="images/minecraft-mod.jpg" alt="Minecraft Mod">
+                        </div>
+                    </div>
+                    <div class="project-card-back">
+                        <h3>Minecraft Mod</h3>
+                        <p>A comprehensive Minecraft mod introducing new mechanics, blocks, and gameplay features.</p>
+                        <div class="back-tags">
+                            <span>Java</span>
+                            <span>Forge API</span>
+                            <span>Game Dev</span>
+                        </div>
+                        <a href="#" class="btn">View Details</a>
+                    </div>
+                </div>
+
+                <div class="project-card-container fade-in">
+                    <div class="project-card-front">
+                        <div class="project-image">
+                            <img src="images/ai-music.jpg" alt="AI Music Generator">
+                        </div>
+                    </div>
+                    <div class="project-card-back">
+                        <h3>AI Music Composer</h3>
+                        <p>An intelligent music generation platform that creates unique compositions based on style preferences.</p>
+                        <div class="back-tags">
+                            <span>TensorFlow</span>
+                            <span>Web Audio API</span>
+                            <span>Node.js</span>
+                        </div>
+                        <a href="#" class="btn">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Award Badge removed as requested -->
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    // Calculate offset to account for any fixed elements
+                    const offset = 20; 
+                    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - offset;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Intersection Observer for scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        });
+
+        // Observe all elements with animation classes
+        document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right, .scale-in').forEach(element => {
+            observer.observe(element);
+        });
+        
+        // Add show class to initial elements after a short delay
+        setTimeout(() => {
+            document.querySelector('.hero h1').classList.add('show');
+            document.querySelector('.slide-in-left').classList.add('show');
+            document.querySelector('.slide-in-right').classList.add('show');
+            document.querySelector('.scale-in').classList.add('show');
+            document.querySelector('.btn.scale-in').classList.add('show');
+        }, 300);
+        
+        // Create dynamic floating elements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mouse parallax effect
+            document.addEventListener('mousemove', function(e) {
+                const moveX = (e.clientX - window.innerWidth / 2) * 0.01;
+                const moveY = (e.clientY - window.innerHeight / 2) * 0.01;
+                
+                document.querySelector('.hero h1').style.transform = `translateX(${moveX}px) translateY(${moveY}px)`;
+                
+                // Move cube containers with mouse
+                document.querySelectorAll('.cube-container').forEach(cube => {
+                    const speed = parseFloat(cube.getAttribute('data-speed') || 0.03);
+                    cube.style.transform = `translateX(${moveX * speed * 2}px) translateY(${moveY * speed * 2}px)`;
+                });
+            });
+            
+            // Random cube creation
+            function createRandomCube() {
+                const container = document.createElement('div');
+                container.className = 'cube-container';
+                
+                // Random position
+                const top = Math.random() * 80 + 10; // Between 10% and 90%
+                const left = Math.random() * 80 + 10;
+                const size = Math.random() * 40 + 40; // Between 40px and 80px
+                const speed = Math.random() * 0.05 + 0.01;
+                
+                container.style.top = `${top}%`;
+                container.style.left = `${left}%`;
+                container.style.width = `${size}px`;
+                container.style.height = `${size}px`;
+                container.setAttribute('data-speed', speed);
+                
+                const cube = document.createElement('div');
+                cube.className = 'cube';
+                
+                // Random animation duration
+                const duration = Math.random() * 10 + 15; // Between 15s and 25s
+                cube.style.animationDuration = `${duration}s`;
+                
+                // Create cube faces
+                for (let i = 0; i < 6; i++) {
+                    const face = document.createElement('div');
+                    face.className = 'cube-face';
+                    cube.appendChild(face);
+                }
+                
+                container.appendChild(cube);
+                document.body.appendChild(container);
+                
+                // Remove after some time
+                setTimeout(() => {
+                    container.style.opacity = '0';
+                    setTimeout(() => {
+                        container.remove();
+                    }, 1000);
+                }, 15000);
+            }
+            
+            // Create initial cubes
+            setInterval(createRandomCube, 5000);
+            
+            // Handle touch events for mobile devices
+            const projectCards = document.querySelectorAll('.project-card-container');
+            projectCards.forEach(card => {
+                card.addEventListener('touchstart', function() {
+                    this.classList.toggle('touch-flip');
+                    
+                    const frontCard = this.querySelector('.project-card-front');
+                    const backCard = this.querySelector('.project-card-back');
+                    
+                    if (this.classList.contains('touch-flip')) {
+                        frontCard.style.transform = 'rotateY(180deg)';
+                        backCard.style.transform = 'rotateY(360deg)';
+                    } else {
+                        frontCard.style.transform = 'rotateY(0deg)';
+                        backCard.style.transform = 'rotateY(180deg)';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
