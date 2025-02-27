@@ -59,12 +59,13 @@
 
         /* Variables */
         :root {
-            --primary: #212121;
-            --yellow: #FFE14D;
-            --pink: #E0B0B0;
-            --green: #A0E0A0;
-            --dark: #212121;
-            --light: #f8f9fa;
+            --primary: #2A3B4C;          /* Darker blue */
+            --yellow: #F6EDE3;           /* Soft cream/ivory instead of bright yellow */
+            --accent: #D06D5F;           /* Terracotta/coral accent color */
+            --secondary: #78A8A0;        /* Sage green */
+            --dark: #2A3B4C;             /* Same as primary */
+            --text: #333333;             /* Text color */
+            --light: #F9F9F9;            /* Light background color */
             --sidebar-width: 70px;
             --sidebar-hover-width: 75px;
             --transition: all 0.3s ease;
@@ -76,7 +77,7 @@
         body {
             font-family: 'Helvetica Neue', Arial, sans-serif;
             line-height: 1.6;
-            color: var(--dark);
+            color: var(--text);
             background-color: var(--yellow);
             overflow-x: hidden;
             position: relative;
@@ -105,7 +106,7 @@
             left: 0;
             width: var(--sidebar-width);
             height: 100vh;
-            background-color: #212121;
+            background-color: var(--primary);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -136,10 +137,10 @@
         }
         
         .sidebar-icon:hover {
-            background-color: var(--yellow);
-            color: #212121;
+            background-color: var(--accent);
+            color: white;
             transform: scale(1.15) translateX(5px);
-            box-shadow: 0 5px 15px rgba(255, 225, 77, 0.3);
+            box-shadow: 0 5px 15px rgba(208, 109, 95, 0.3);
         }
         
         .sidebar-icon .tooltip {
@@ -219,11 +220,25 @@
             font-size: 12vw;
             font-weight: 900;
             line-height: 1;
-            color: var(--dark);
+            color: var(--primary);
             text-transform: uppercase;
-            margin-bottom: 50px;
+            margin-bottom: 20px;
             transition: var(--transition);
             text-shadow: 0 0 0 rgba(0, 0, 0, 0);
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            color: var(--primary);
+            max-width: 600px;
+            margin: 0 auto 50px;
+            font-weight: 300;
+            opacity: 0.85;
+            transition: var(--transition);
+        }
+        
+        .subtitle.show {
+            opacity: 1;
         }
         
         .hero h1:hover {
@@ -259,7 +274,7 @@
         /* Buttons */
         .btn {
             display: inline-block;
-            background-color: #212121;
+            background-color: var(--primary);
             color: white;
             padding: 12px 25px;
             font-weight: 600;
@@ -291,7 +306,7 @@
             left: 0;
             width: 0%;
             height: 100%;
-            background-color: #FF5F56;
+            background-color: var(--accent);
             transition: all 0.3s;
             z-index: -1;
         }
@@ -356,7 +371,7 @@
         }
         
         .buy-tickets-btn:hover {
-            background-color: #FF5F56;
+            background-color: var(--accent);
             transform: translateY(-3px);
             box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
         }
@@ -368,7 +383,7 @@
         /* Projects/Exhibitions Section */
         .projects {
             padding: 30px 0 60px;
-            background-color: var(--pink);
+            background-color: var(--secondary);
             position: relative;
             z-index: 10;
             margin-top: 40px;
@@ -409,7 +424,7 @@
             height: 100%;
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
-            border: 8px solid var(--green);
+            border: 8px solid var(--accent);
             overflow: hidden;
             transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             background-color: white;
@@ -430,7 +445,7 @@
             align-items: center;
             text-align: center;
             padding: 1.5rem;
-            background-color: var(--dark);
+            background-color: var(--primary);
             color: white;
         }
 
@@ -622,6 +637,7 @@
 
         <section class="hero container">
             <h1 class="fade-in">WELCOME</h1>
+            <p class="subtitle fade-in">Welcome to my portfolio. I build creative solutions with clean code and innovative design.</p>
             
             <div class="pagination">
                 <div class="pagination-dot"></div>
@@ -742,8 +758,8 @@
             document.querySelector('.hero h1').classList.add('show');
             document.querySelector('.slide-in-left').classList.add('show');
             document.querySelector('.slide-in-right').classList.add('show');
-            document.querySelector('.scale-in').classList.add('show');
             document.querySelector('.btn.scale-in').classList.add('show');
+                            document.querySelector('.subtitle').classList.add('show');
         }, 300);
         
         // Create dynamic floating elements
