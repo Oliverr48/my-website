@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oliver's Portfolio</title>
+    <title>Oliver.</title>
     <style>
         /* Modern Reset */
         *, *::before, *::after {
@@ -14,7 +14,7 @@
         
         /* Animation Classes */
         .fade-in {
-            opacity: 0;
+            opacity: 0.7;
             transform: translateY(20px);
             transition: opacity 0.6s ease, transform 0.6s ease;
         }
@@ -59,11 +59,11 @@
 
         /* Variables */
         :root {
-            --primary: #2A3B4C;          /* Darker blue */
-            --yellow: #F6EDE3;           /* Soft cream/ivory instead of bright yellow */
-            --accent: #D06D5F;           /* Terracotta/coral accent color */
-            --secondary: #78A8A0;        /* Sage green */
-            --dark: #2A3B4C;             /* Same as primary */
+            --primary: #2d4c2a;          /* Darker blue */
+            --yellow: #ff9216;           /* Soft cream/ivory instead of bright yellow */
+            --accent: #005153;           /* Terracotta/coral accent color */
+            --secondary: #ffb20d;        /* Sage green */
+            --dark: #2a4c30;             /* Same as primary */
             --text: #333333;             /* Text color */
             --light: #F9F9F9;            /* Light background color */
             --sidebar-width: 70px;
@@ -196,10 +196,10 @@
         }
 
         .action-text {
-            font-size: 2rem;
+            font-size: 1.5rem;
             font-weight: 700;
             color: var(--dark);
-            letter-spacing: 2px;
+            letter-spacing: 0px;
             cursor: pointer;
             transition: transform 0.3s ease, color 0.3s ease;
         }
@@ -380,14 +380,7 @@
             left: 100%;
         }
 
-        /* Projects/Exhibitions Section */
-        .projects {
-            padding: 30px 0 60px;
-            background-color: var(--secondary);
-            position: relative;
-            z-index: 10;
-            margin-top: 40px;
-        }
+
 
         .section-header {
             display: flex;
@@ -395,17 +388,73 @@
             margin-bottom: 40px;
         }
 
-        .section-header .btn {
-            font-size: 1.2rem;
-            background-color: var(--yellow);
-            color: var(--dark);
+                /* Force the section header button to always be visible */
+        .section-header .btn.yellow-btn {
+            opacity: 1 !important;
+            transform: none !important;
+            visibility: visible !important;
+            display: block !important; /* Ensure the button is displayed */
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease !important;
         }
 
+
+
+        /* Main projects container - make it centered */
+        .projects {
+            padding: 30px 0 60px;
+            background-color: var(--secondary);
+            position: relative;
+            z-index: 10;
+            margin-top: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Centers the content horizontally */
+        }
+
+        /* Make the projects grid container itself have a max-width and be centered */
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
-            padding: 0 60px;
+            width: 100%;
+            max-width: 1200px; /* Set a maximum width */
+            margin: 0 auto; /* Auto margins for centering */
+            padding: 0 20px 0 calc(var(--sidebar-width) + 20px); /* Account for sidebar */
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1200px) {
+            .projects-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                max-width: 900px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .projects-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                max-width: 800px;
+                padding: 0 20px 0 calc(var(--sidebar-width) + 10px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .projects-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                max-width: 600px;
+                padding: 0 20px 0 calc(var(--sidebar-width) + 10px);
+            }
+        }
+
+        @media (max-width: 576px) {
+            .projects-grid {
+                grid-template-columns: 1fr; /* Single column on very small screens */
+                padding: 0 15px 0 calc(var(--sidebar-width) + 5px);
+            }
+            
+            .project-card-container {
+                height: 300px; /* Slightly smaller cards on mobile */
+            }
         }
 
         /* Project Card 3D Flip Effect */
@@ -424,7 +473,8 @@
             height: 100%;
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
-            border: 8px solid var(--accent);
+            border: 4px solid var(--accent);
+            border-radius: 10px;
             overflow: hidden;
             transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             background-color: white;
@@ -503,16 +553,18 @@
 
         /* 3D Rotating Cube Animation */
         .cube-container {
+          
             position: fixed;
             width: 80px;
             height: 80px;
-            perspective: 1000px;
+            perspective: 2000px;
             z-index: 0;
             pointer-events: none;
-            opacity: 0.5;
+            opacity: 0.6;
         }
         
         .cube {
+        
             width: 100%;
             height: 100%;
             position: relative;
@@ -521,10 +573,11 @@
         }
         
         .cube-face {
+            
             position: absolute;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.1);
+            width: 50%;
+            height: 50%;
+            background: rgba(32, 0, 216, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.3);
         }
         
@@ -540,40 +593,7 @@
             100% { transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg); }
         }
 
-        /* Responsive Design */
-        @media (max-width: 992px) {
-            .projects-grid {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-                padding: 0 20px 0 80px;
-            }
-            
-            .hero h1 {
-                font-size: 15vw;
-            }
-        }
 
-        @media (max-width: 768px) {
-            .projects-grid {
-                grid-template-columns: 1fr;
-                padding: 0 20px 0 80px;
-            }
-            
-            .award-badge {
-                width: 120px;
-                height: 120px;
-                left: 70px;
-                bottom: 10px;
-            }
-            
-            .badge-content {
-                font-size: 0.6rem;
-                padding: 10px;
-            }
-            
-            .badge-year {
-                font-size: 1rem;
-            }
-        }
     </style>
 </head>
 <body>
@@ -606,20 +626,138 @@
     <div class="sidebar">
         <div class="sidebar-icon">
             📅
-            <span class="tooltip">Calendar</span>
+            <span class="tooltip">Projects I have planned</span>
         </div>
         <div class="sidebar-icon">
             🎟️
-            <span class="tooltip">Tickets</span>
+            <span class="tooltip">Music</span>
         </div>
         <div class="sidebar-icon">
             🔍
-            <span class="tooltip">Search</span>
+            <span class="tooltip">Random</span>
         </div>
-        <div class="sidebar-icon">
+        <div id="location-of-day" class="sidebar-icon">
             📍
-            <span class="tooltip">Location</span>
+            <span class="tooltip">Location of the day</span>
         </div>
+
+        <script>
+            // Location of the Day feature with Street View
+            document.addEventListener('DOMContentLoaded', function() {
+                const locationIcon = document.getElementById('location-of-day');
+                
+        // List of interesting locations likely to have Street View
+        // Format: [latitude, longitude, heading, pitch]
+        const interestingLocations = [
+            // Famous cities and landmarks
+            [48.2082, 16.3738, 180, 10],  // Vienna, Austria
+            [52.5200, 13.4050, 90, 0],    // Berlin, Germany
+            [34.0522, -118.2437, 150, 10],// Los Angeles, USA
+            [19.4326, -99.1332, 270, 0],  // Mexico City, Mexico
+            [35.6895, 139.6917, 120, 20], // Shibuya Crossing, Tokyo
+            [25.7617, -80.1918, 60, 10],  // Miami, USA
+            [45.5017, -73.5673, 90, 0],   // Montreal, Canada
+            [60.1699, 24.9384, 210, 10],  // Helsinki, Finland
+            [41.3851, 2.1734, 240, 20],   // Barcelona, Spain
+            [39.9042, 116.4074, 180, 0],  // Beijing, China
+            [35.3606, 138.7274, 60, 10],  // Mount Fuji, Japan
+            [51.1657, 10.4515, 120, 0],   // Frankfurt, Germany
+            [19.0760, 72.8777, 90, 10],   // Mumbai, India
+            [-34.6037, -58.3816, 270, 0], // Buenos Aires, Argentina
+            [37.5665, 126.9780, 150, 20], // Seoul, South Korea
+            [52.2297, 21.0122, 30, 10],   // Warsaw, Poland
+            [33.4484, -112.0740, 180, 0], // Phoenix, USA
+            [43.6532, -79.3832, 60, 10],  // Toronto, Canada
+            [41.9028, 12.4964, 90, 0],    // Vatican City
+            [30.0444, 31.2357, 270, 0],   // Cairo, Egypt
+            [39.7392, -104.9903, 120, 20],// Denver, USA
+            [50.8503, 4.3517, 60, 10],    // Brussels, Belgium
+            [59.3293, 18.0686, 210, 0],   // Stockholm, Sweden
+            [55.6761, 12.5683, 240, 10],  // Copenhagen, Denmark
+            [40.7306, -73.9352, 180, 0],  // Brooklyn, New York
+            [50.0755, 14.4378, 30, 10],   // Prague, Czech Republic
+            [34.6937, 135.5023, 150, 20], // Osaka, Japan
+            [32.7157, -117.1611, 90, 0],  // San Diego, USA
+            [21.1619, -86.8515, 270, 0],  // Cancun, Mexico
+            [13.7563, 100.5018, 60, 10],  // Bangkok, Thailand
+            [45.4215, -75.6972, 120, 0],  // Ottawa, Canada
+            [35.0116, 135.7681, 90, 10],  // Kyoto, Japan
+            [51.0447, -114.0719, 180, 0], // Calgary, Canada
+            [37.9838, 23.7275, 150, 20],  // Acropolis, Athens
+            [25.0343, -77.3963, 60, 10],  // Nassau, Bahamas
+            [50.0647, 19.9450, 210, 0],   // Kraków, Poland
+            [41.2565, -95.9345, 240, 10], // Omaha, USA
+            [35.0844, -106.6504, 180, 0], // Albuquerque, USA
+            [-23.5505, -46.6333, 30, 10], // São Paulo, Brazil
+            [47.6062, -122.3321, 150, 20],// Seattle, USA
+            [40.7128, -74.0060, 90, 0],   // Manhattan, New York
+            [18.4655, -66.1057, 270, 0],  // San Juan, Puerto Rico
+            [53.5511, 9.9937, 60, 10],    // Hamburg, Germany
+            [38.7223, -9.1393, 120, 0],   // Lisbon, Portugal
+            [32.7767, -96.7970, 90, 10],  // Dallas, USA
+            [43.0389, -87.9065, 180, 0],  // Milwaukee, USA
+            [37.7749, -122.4194, 150, 20],// San Francisco, USA
+            [28.6139, 77.2090, 60, 10],   // New Delhi, India
+            [36.1627, -86.7816, 210, 0],  // Nashville, USA
+            [25.2760, 55.2962, 240, 10]   // Dubai Marina, UAE
+            [47.6062, -122.3321, 30, 10], // Seattle, Washington
+            [19.4326, -99.1332, 120, 0],  // Mexico City
+            [30.0444, 31.2357, 180, 0]    // Cairo, Egypt
+        ];
+                
+                // Function to get a deterministic location based on current hour
+                function getLocationForCurrentHour() {
+                    // Get current date and hour as seed
+                    const now = new Date();
+                    const seed = now.getDate() * 100 + now.getMonth() * 10 + now.getFullYear() + now.getHours();
+                    
+                    // Use seed to deterministically select a location
+                    const index = seed % interestingLocations.length;
+                    const [lat, lng, heading, pitch] = interestingLocations[index];
+                    
+                    // Add a slight variation for each hour to make it more interesting
+                    // but still in the same general area
+                    const latVariation = (Math.sin(seed) * 0.01).toFixed(6);
+                    const lngVariation = (Math.cos(seed) * 0.01).toFixed(6);
+                    
+                    return {
+                        lat: (lat + parseFloat(latVariation)).toFixed(6),
+                        lng: (lng + parseFloat(lngVariation)).toFixed(6),
+                        heading: heading,
+                        pitch: pitch
+                    };
+                }
+                
+                // Update tooltip to show when the location will change
+                function updateTooltip() {
+                    const tooltip = locationIcon.querySelector('.tooltip');
+                    const now = new Date();
+                    const nextHour = new Date(now);
+                    nextHour.setHours(nextHour.getHours() + 1);
+                    nextHour.setMinutes(0);
+                    nextHour.setSeconds(0);
+                    
+                    const minutesLeft = Math.floor((nextHour - now) / 60000);
+                    tooltip.innerHTML = `Street View of the Day<br>Changes in ${minutesLeft} min`;
+                }
+                
+                // Update the tooltip every minute
+                setInterval(updateTooltip, 60000);
+                updateTooltip();
+                
+                // Handle click on location icon
+                locationIcon.addEventListener('click', function() {
+                    const location = getLocationForCurrentHour();
+                    
+                    // Open Google Maps Street View at the current location
+                    const streetViewUrl = `https://www.google.com/maps/@${location.lat},${location.lng},3a,75y,${location.heading}h,${location.pitch}t/data=!3m6!1e1!3m4!1s-xJkU4v8lkHOU1XmAjH7qw!2e0!7i16384!8i8192`;
+                    window.open(streetViewUrl, '_blank');
+                });
+            });
+        </script>
+
+
+
         <div class="sidebar-icon">
             ≡
             <span class="tooltip">Menu</span>
@@ -632,18 +770,12 @@
             <div class="logo scale-in">
                 <div class="logo-top">Oliver<span style="color: var(--primary);">.</span></div>
             </div>
-            <div class="action-text slide-in-right">PLAY</div>
+            <a href="https://open.spotify.com/artist/6WcwmDXRJDJet6lRDJfmK9?si=zlvEQT4RS2asMZ7PPx3yYg" class="action-text slide-in-right" target="_blank">PASHA</a>
         </header>
 
         <section class="hero container">
             <h1 class="fade-in">WELCOME</h1>
             <p class="subtitle fade-in">Welcome to my portfolio. I build creative solutions with clean code and innovative design.</p>
-            
-            <div class="pagination">
-                <div class="pagination-dot"></div>
-                <div class="pagination-dot active"></div>
-                <div class="pagination-dot"></div>
-            </div>
             
             <div>
                 <a href="#projects" class="btn scale-in">FEATURED PROJECTS <span class="arrow">↓</span></a>
@@ -652,7 +784,7 @@
 
         <section class="projects" id="projects">
             <div class="section-header">
-                <a href="#" class="btn yellow-btn fade-in">ALL PROJECTS <span class="arrow">→</span></a>
+                <a href="#" class="btn scale-in">ALL PROJECTS <span class="arrow">→</span></a>
             </div>
 
             <div class="projects-grid">
@@ -666,9 +798,9 @@
                         <h3>Weather Forecast App</h3>
                         <p>A sleek, responsive weather application providing real-time forecasts and data visualization.</p>
                         <div class="back-tags">
-                            <span>React</span>
+                            <span>Python</span>
                             <span>Weather API</span>
-                            <span>Tailwind CSS</span>
+                            <span>HTML</span>
                         </div>
                         <a href="#" class="btn">View Details</a>
                     </div>
@@ -685,7 +817,7 @@
                         <p>A comprehensive Minecraft mod introducing new mechanics, blocks, and gameplay features.</p>
                         <div class="back-tags">
                             <span>Java</span>
-                            <span>Forge API</span>
+                            <span>Fabric API</span>
                             <span>Game Dev</span>
                         </div>
                         <a href="#" class="btn">View Details</a>
