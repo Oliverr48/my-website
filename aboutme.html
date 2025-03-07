@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>About Me</title>
+
+    <style>
+        /* Add your CSS styles here */
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #6c757d;
+            --dark-color: #343a40;
+            --light-color: #f8f9fa;
+        }
+
+        header {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            padding: 10px 0;
+        }
+
+        body {
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        p {
+            font-size: 18px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            width: 80%;
+            margin: 2rem auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .section {
+            margin-top: 40px;
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            text-align: center;
+            color: #333;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            transition: background-color 0.3s ease-in-out;
+            position: relative;
+        }
+
+        .hero {
+            padding: 50px 0;
+            text-align: center;
+            color: #333;
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            list-style-type: none;
+            padding: 0;
+            margin: 10px 0 0 0;
+            width: 100%;
+        }
+        
+        .nav-links li {
+            margin: 0 15px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            background-color: var(--primary-color);
+        }
+
+        /* Fixed progress bar styling */
+        .skill {
+            max-width: 500px;
+            margin: 0 auto 20px auto;
+            text-align: left;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            background-color: #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            position: relative;
+            height: 20px;
+        }
+
+        .progress {
+            height: 20px;
+            background-color: var(--primary-color);
+            border-radius: 5px;
+            position: relative;
+        }
+
+        .progress-text {
+            position: absolute;
+            right: 10px;
+            top: 0;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .skill p {
+            margin: 0 0 5px 0;
+            font-weight: bold;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+        }
+        
+        /* Improved styling for hobby list */
+        .section ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 20px auto;
+            max-width: 400px;
+            text-align: left;
+        }
+        
+        .section li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 18px;
+        }
+        
+        .section li:last-child {
+            border-bottom: none;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+            }
+            
+            .nav-links li {
+                margin: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">OK</div>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#hobbies">Hobbies</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#music">Music</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <section class="hero" id="about">
+            <div class="hero-text">
+                <h1>About Me</h1>
+                <p>Hi, my name is Oliver King. I am a 3rd year university student at UWA. I love making music, coding and doing creative things.</p>
+                <p>This site is about my coding journey and different projects that I like to delve into. It also will show schedule to when I am releasing music</p>
+            </div>
+        </section>
+
+        <section class="section" id="hobbies">
+            <h2>My Hobbies</h2>
+            <p>My hobbies include:</p>
+            <ul>
+                <li>Making music</li>
+                <li>Reading</li>
+                <li>Programming</li>
+                <li>Playing video games</li>
+                <li>Traveling</li>
+                <li>AI</li>
+            </ul>
+        </section>
+
+        <section class="section" id="skills">
+            <h2>My Skills</h2>
+            <p>Here is my progression in different coding languages:</p>
+            <div class="skill">
+                <p>HTML</p>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 70%;">
+                        <span class="progress-text">70%</span>
+                    </div>
+                </div>
+            </div>
+            <div class="skill">
+                <p>CSS</p>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 50%;">
+                        <span class="progress-text">50%</span>
+                    </div>
+                </div>
+            </div>
+            <div class="skill">
+                <p>JavaScript</p>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 35%;">
+                        <span class="progress-text">35%</span>
+                    </div>
+                </div>
+            </div>
+            <div class="skill">
+                <p>Python</p>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 70%;">
+                        <span class="progress-text">70%</span>
+                    </div>
+                </div>
+            </div>
+            <div class="skill">
+                <p>C</p>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 25%;">
+                        <span class="progress-text">25%</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+    
+                const targetId = this.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+    
+                window.scrollTo({
+                    top: targetSection.offsetTop - 70,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>   
+</body>
+</html>
