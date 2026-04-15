@@ -694,6 +694,44 @@
             background: #1a2618;
         }
 
+        .mystery-sv-fallback {
+            position: absolute;
+            inset: 0;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            padding: 1.5rem;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.95rem;
+            line-height: 1.45;
+        }
+
+        .mystery-sv-fallback.is-visible {
+            display: flex;
+        }
+
+        .mystery-sv-fallback .btn-mystery-sv {
+            display: inline-block;
+            background: var(--accent);
+            color: #fff;
+            font-weight: 600;
+            padding: 14px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            font-size: 0.9rem;
+            transition: background 0.25s ease, transform 0.2s ease;
+        }
+
+        .mystery-sv-fallback .btn-mystery-sv:hover {
+            background: var(--primary);
+            transform: translateY(-2px);
+        }
+
         .mystery-map-footer {
             margin-top: 1rem;
             text-align: center;
@@ -716,6 +754,22 @@
             height: 100%;
             border: none;
             display: block;
+        }
+
+        /* Covers the embedded Street View location label in top-left corner. */
+        .street-view-label-mask {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 320px;
+            height: 72px;
+            background: #1a2618;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .street-view-iframe.is-hidden {
+            display: none !important;
         }
 
         .close-street-view {
@@ -971,10 +1025,15 @@
     
     <div class="street-view-modal" id="street-view-modal" role="dialog" aria-modal="true" aria-labelledby="street-view-title">
         <div class="street-view-title" id="street-view-title">Mystery location of the day</div>
-        <div class="street-view-container">
-            <iframe id="street-view-iframe" class="street-view-iframe" title="Map preview for today&apos;s mystery location" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+        <div class="street-view-container" id="street-view-container">
+            <iframe id="street-view-iframe" class="street-view-iframe" title="Street View for today&apos;s mystery location" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+            <div class="street-view-label-mask" aria-hidden="true"></div>
+            <div id="mystery-sv-fallback" class="mystery-sv-fallback">
+                <p>Could not load inline Street View for this spot. Open the same location directly in Google Maps Street View.</p>
+                <a id="mystery-sv-fallback-btn" class="btn-mystery-sv" href="#" target="_blank" rel="noopener noreferrer">Open Street View</a>
+            </div>
         </div>
-        <p class="mystery-map-footer"><a id="open-google-mystery" href="#" target="_blank" rel="noopener noreferrer">Open in Google Street View</a></p>
+        <p class="mystery-map-footer"><a id="open-google-mystery" href="#" target="_blank" rel="noopener noreferrer">Open in Google Maps (same view)</a></p>
         <button type="button" class="close-street-view" id="close-street-view" aria-label="Close map">&times;</button>
     </div>
 
@@ -1032,6 +1091,8 @@
             const closeStreetView = document.getElementById('close-street-view');
             const streetViewIframe = document.getElementById('street-view-iframe');
             const openGoogleMystery = document.getElementById('open-google-mystery');
+            const mysterySvFallback = document.getElementById('mystery-sv-fallback');
+            const mysterySvFallbackBtn = document.getElementById('mystery-sv-fallback-btn');
             
             // List of interesting locations likely to have Street View
             // Format: [latitude, longitude, heading, pitch]
@@ -1133,11 +1194,14 @@
             setInterval(updateTooltip, 1000);
             updateTooltip();
             
-            function buildOsmEmbedUrl(lat, lng) {
-                const pad = 0.04;
-                const bbox = [lng - pad, lat - pad, lng + pad, lat + pad].join(',');
-                return 'https://www.openstreetmap.org/export/embed.html?bbox=' + encodeURIComponent(bbox) +
-                    '&layer=mapnik&marker=' + encodeURIComponent(lat + ',' + lng);
+            function buildStreetViewEmbedUrl(lat, lng, heading, pitch) {
+                const params = new URLSearchParams({
+                    layer: 'c',
+                    cbll: lat + ',' + lng,
+                    cbp: '12,' + heading + ',0,' + pitch + ',0',
+                    output: 'svembed'
+                });
+                return 'https://maps.google.com/maps?' + params.toString();
             }
 
             function buildGoogleStreetViewUrl(lat, lng, heading, pitch) {
@@ -1155,7 +1219,10 @@
                 streetViewModal.style.display = 'none';
                 document.body.style.overflow = '';
                 streetViewIframe.src = '';
+                streetViewIframe.classList.remove('is-hidden');
+                mysterySvFallback.classList.remove('is-visible');
                 openGoogleMystery.setAttribute('href', '#');
+                mysterySvFallbackBtn.setAttribute('href', '#');
             }
 
             locationIcon.addEventListener('click', function() {
@@ -1165,8 +1232,12 @@
                 const h = loc.heading;
                 const p = loc.pitch;
 
-                streetViewIframe.src = buildOsmEmbedUrl(lat, lng);
-                openGoogleMystery.href = buildGoogleStreetViewUrl(lat, lng, h, p);
+                const panoUrl = buildGoogleStreetViewUrl(lat, lng, h, p);
+                openGoogleMystery.href = panoUrl;
+                mysterySvFallbackBtn.href = panoUrl;
+                streetViewIframe.src = buildStreetViewEmbedUrl(lat, lng, h, p);
+                streetViewIframe.classList.remove('is-hidden');
+                mysterySvFallback.classList.remove('is-visible');
 
                 streetViewModal.style.display = 'flex';
                 document.body.style.overflow = 'hidden';
