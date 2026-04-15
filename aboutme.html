@@ -3,286 +3,254 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>About Me</title>
-
+    <meta name="description" content="About Oliver King — UWA student, developer, music.">
+    <title>About — Oliver King</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&display=swap" rel="stylesheet">
     <style>
-        /* Add your CSS styles here */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
         :root {
-            --primary-color: #007bff;
-            --secondary-color: #6c757d;
-            --dark-color: #343a40;
-            --light-color: #f8f9fa;
-        }
-
-        header {
-            background-color: var(--dark-color);
-            color: white;
-            padding: 1rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        nav {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            padding: 10px 0;
+            --primary: #2d4c2a;
+            --yellow: #ff9216;
+            --accent: #708367;
+            --secondary: #ffb20d;
+            --dark: #2a4c30;
+            --text: #333333;
+            --light: #F9F9F9;
+            --sidebar-width: 70px;
         }
 
         body {
-            background-color: #f2f2f2;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
+            font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.65;
+            color: var(--text);
+            background-color: var(--yellow);
         }
 
-        h1 {
-            text-align: center;
-            color: #333;
+        a { color: var(--primary); font-weight: 600; text-decoration: none; }
+        a:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: var(--sidebar-width);
+            height: 100vh;
+            background-color: var(--primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 80px;
+            z-index: 100;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        p {
-            font-size: 18px;
-            line-height: 1.5;
-            margin-bottom: 20px;
+        .sidebar-icon {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-bottom: 25px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            background-color: rgba(255, 255, 255, 0.05);
+            transition: all 0.35s ease;
+            text-decoration: none;
+        }
+
+        .sidebar-icon:hover {
+            background-color: var(--accent);
+            transform: scale(1.08);
+        }
+
+        .main-wrap {
+            margin-left: var(--sidebar-width);
+            min-height: 100vh;
+        }
+
+        .page-hero {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--yellow) 100%);
+            padding: 3rem 1.5rem 2rem;
+            padding-left: calc(var(--sidebar-width) + 1.5rem);
+        }
+
+        .breadcrumb { font-size: 0.9rem; margin-bottom: 1rem; color: rgba(42, 76, 48, 0.8); }
+
+        .page-hero h1 {
+            font-size: clamp(2rem, 5vw, 2.5rem);
+            color: var(--dark);
+            font-weight: 800;
+            margin-bottom: 0.75rem;
+        }
+
+        .page-hero .tagline {
+            max-width: 36rem;
+            color: rgba(42, 76, 48, 0.92);
+            font-size: 1.1rem;
         }
 
         .container {
-            width: 80%;
-            margin: 2rem auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
+            padding-left: calc(var(--sidebar-width) + 1.5rem);
         }
 
-        .section {
-            margin-top: 40px;
-            border-top: 1px solid #ddd;
-            padding-top: 20px;
-            padding-bottom: 20px;
-            text-align: center;
-            color: #333;
-            background-color: #f9f9f9;
-            border-radius: 8px;
-            transition: background-color 0.3s ease-in-out;
-            position: relative;
+        section {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem 1.35rem;
+            margin-bottom: 1.25rem;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(45, 76, 42, 0.12);
         }
 
-        .hero {
-            padding: 50px 0;
-            text-align: center;
-            color: #333;
+        section h2 {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--dark);
+            margin-bottom: 1rem;
+            padding-left: 0.65rem;
+            border-left: 4px solid var(--accent);
         }
 
-        .nav-links {
-            display: flex;
-            justify-content: center;
-            list-style-type: none;
+        section p { margin-bottom: 1rem; color: #444; }
+        section p:last-child { margin-bottom: 0; }
+
+        ul.clean {
+            list-style: none;
             padding: 0;
-            margin: 10px 0 0 0;
-            width: 100%;
-        }
-        
-        .nav-links li {
-            margin: 0 15px;
-        }
-        
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            padding: 5px 10px;
-            border-radius: 3px;
-            transition: background-color 0.3s;
-        }
-        
-        .nav-links a:hover {
-            background-color: var(--primary-color);
         }
 
-        /* Fixed progress bar styling */
-        .skill {
-            max-width: 500px;
-            margin: 0 auto 20px auto;
-            text-align: left;
-        }
-        
-        .progress-bar {
-            width: 100%;
-            background-color: #ddd;
-            border-radius: 5px;
-            overflow: hidden;
-            margin-bottom: 20px;
-            position: relative;
-            height: 20px;
-        }
-
-        .progress {
-            height: 20px;
-            background-color: var(--primary-color);
-            border-radius: 5px;
-            position: relative;
-        }
-
-        .progress-text {
-            position: absolute;
-            right: 10px;
-            top: 0;
-            height: 20px;
-            display: flex;
-            align-items: center;
-            color: white;
-            font-weight: bold;
-            font-size: 14px;
-        }
-
-        .skill p {
-            margin: 0 0 5px 0;
-            font-weight: bold;
-        }
-
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: white;
-        }
-        
-        /* Improved styling for hobby list */
-        .section ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 20px auto;
-            max-width: 400px;
-            text-align: left;
-        }
-        
-        .section li {
-            padding: 8px 0;
+        ul.clean li {
+            padding: 0.65rem 0;
             border-bottom: 1px solid #eee;
-            font-size: 18px;
+            color: #444;
         }
-        
-        .section li:last-child {
-            border-bottom: none;
+
+        ul.clean li:last-child { border-bottom: none; }
+
+        ul.clean strong { color: var(--dark); }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
         }
-        
-        /* Responsive design */
-        @media (max-width: 768px) {
-            .container {
-                width: 90%;
-            }
-            
-            .nav-links {
+
+        .skill-tags span {
+            font-size: 0.82rem;
+            font-weight: 600;
+            padding: 0.35rem 0.7rem;
+            background: var(--light);
+            border-radius: 999px;
+            border: 1px solid rgba(45, 76, 42, 0.12);
+            color: var(--dark);
+        }
+
+        .footer-links {
+            text-align: center;
+            padding: 0 1rem 2.5rem;
+            padding-left: calc(var(--sidebar-width) + 1rem);
+            font-size: 0.95rem;
+            color: rgba(42, 76, 48, 0.85);
+        }
+
+        @media (max-width: 576px) {
+            .page-hero, .container { padding-left: 1rem; }
+            .main-wrap { margin-left: 0; }
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+                flex-direction: row;
+                justify-content: center;
                 flex-wrap: wrap;
+                padding: 12px 8px;
+                gap: 8px;
             }
-            
-            .nav-links li {
-                margin: 5px;
-            }
+            .sidebar-icon { margin-bottom: 0; }
         }
     </style>
 </head>
 <body>
+    <div class="sidebar">
+        <a href="index.html" class="sidebar-icon" title="Home">🏠</a>
+        <a href="allprojects.html" class="sidebar-icon" title="All projects">📆</a>
+        <a href="https://open.spotify.com/artist/6WcwmDXRJDJet6lRDJfmK9?si=zlvEQT4RS2asMZ7PPx3yYg" class="sidebar-icon" target="_blank" rel="noopener noreferrer" title="Music">🎵</a>
+        <a href="aboutme.html" class="sidebar-icon" title="About" aria-current="page">🙋‍♂️</a>
+    </div>
 
-    <header>
-        <nav>
-            <div class="logo">OK</div>
-            <ul class="nav-links">
-                <li><a href="#about">About</a></li>
-                <li><a href="#hobbies">Hobbies</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#music">Music</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
+    <div class="main-wrap">
+        <header class="page-hero">
+            <nav class="breadcrumb"><a href="index.html">Home</a> / About</nav>
+            <h1>Oliver King</h1>
+            <p class="tagline">Third-year student at UWA. I build software, make music as PASHA, and like projects that sit at the intersection of performance, usability, and real-world impact.</p>
+        </header>
 
-    <div class="container">
-        <section class="hero" id="about">
-            <div class="hero-text">
-                <h1>About Me</h1>
-                <p>Hi, my name is Oliver King. I am a 3rd year university student at UWA. I love making music, coding and doing creative things.</p>
-                <p>This site is about my coding journey and different projects that I like to delve into. It also will show schedule to when I am releasing music</p>
-            </div>
-        </section>
+        <div class="container">
+            <section id="about">
+                <h2>About</h2>
+                <p>This site collects things I have shipped: medical simulation tooling, volunteer dev work, full-stack apps, and experiments in audio and hardware. It doubles as a lightweight portfolio while I keep learning across the stack.</p>
+            </section>
 
-        <section class="section" id="hobbies">
-            <h2>My Hobbies</h2>
-            <p>My hobbies include:</p>
-            <ul>
-                <li>Making music</li>
-                <li>Reading</li>
-                <li>Programming</li>
-                <li>Playing video games</li>
-                <li>Traveling</li>
-                <li>AI</li>
-            </ul>
-        </section>
+            <section id="experience">
+                <h2>Highlights</h2>
+                <ul class="clean">
+                    <li><strong>MPMS v3</strong> — Medical-grade multi-patient simulation (60fps UI, microsecond interaction logging, binaural Web Audio alerts). Led a six-person Agile team. React, TypeScript, Electron.</li>
+                    <li><strong>Coders for Causes</strong> — Competitive placement on a fifteen-person Agile team; built &ldquo;About Us&rdquo; and &ldquo;Committee&rdquo; full-stack with strong Git hygiene.</li>
+                    <li><strong>ProveIt</strong> — Solo full-stack task tracking with hierarchical approvals, relational data modelling, and secure file validation.</li>
+                    <li><strong>MIDI Melody Generator</strong> — Algorithmic sequences with a ~30% processing improvement for real-time use.</li>
+                    <li><strong>Portfolio</strong> — This site, deployed at <a href="https://oliland.onrender.com">oliland.onrender.com</a>.</li>
+                    <li><strong>Raspberry Pi plant waterer</strong> — In progress: soil moisture and irrigation on Pi Zero 2W; replacement Pi pending.</li>
+                </ul>
+            </section>
 
-        <section class="section" id="skills">
-            <h2>My Skills</h2>
-            <p>Here is my progression in different coding languages:</p>
-            <div class="skill">
-                <p>HTML</p>
-                <div class="progress-bar">
-                    <div class="progress" style="width: 70%;">
-                        <span class="progress-text">70%</span>
-                    </div>
+            <section id="skills">
+                <h2>Skills &amp; tools</h2>
+                <p>Comfortable across frontend and backend; strongest where TypeScript/React meet careful UX and measurable performance.</p>
+                <div class="skill-tags" role="list">
+                    <span role="listitem">TypeScript</span>
+                    <span role="listitem">React</span>
+                    <span role="listitem">Electron</span>
+                    <span role="listitem">Web Audio API</span>
+                    <span role="listitem">Python</span>
+                    <span role="listitem">SQL</span>
+                    <span role="listitem">Git / Agile</span>
+                    <span role="listitem">HTML / CSS / JS</span>
                 </div>
-            </div>
-            <div class="skill">
-                <p>CSS</p>
-                <div class="progress-bar">
-                    <div class="progress" style="width: 50%;">
-                        <span class="progress-text">50%</span>
-                    </div>
-                </div>
-            </div>
-            <div class="skill">
-                <p>JavaScript</p>
-                <div class="progress-bar">
-                    <div class="progress" style="width: 35%;">
-                        <span class="progress-text">35%</span>
-                    </div>
-                </div>
-            </div>
-            <div class="skill">
-                <p>Python</p>
-                <div class="progress-bar">
-                    <div class="progress" style="width: 70%;">
-                        <span class="progress-text">70%</span>
-                    </div>
-                </div>
-            </div>
-            <div class="skill">
-                <p>C</p>
-                <div class="progress-bar">
-                    <div class="progress" style="width: 25%;">
-                        <span class="progress-text">25%</span>
-                    </div>
-                </div>
-            </div>
-        </section>
+            </section>
+
+            <section id="music">
+                <h2>Music</h2>
+                <p>Releases and artist profile on Spotify as <a href="https://open.spotify.com/artist/6WcwmDXRJDJet6lRDJfmK9?si=zlvEQT4RS2asMZ7PPx3yYg" target="_blank" rel="noopener noreferrer">PASHA</a>.</p>
+            </section>
+        </div>
+
+        <footer class="footer-links">
+            <p><a href="index.html">← Home</a> · <a href="allprojects.html">All projects</a> · <a href="https://oliland.onrender.com">oliland.onrender.com</a></p>
+        </footer>
     </div>
 
     <script>
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('nav a').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-    
-                const targetId = this.getAttribute('href');
-                const targetSection = document.querySelector(targetId);
-    
-                window.scrollTo({
-                    top: targetSection.offsetTop - 70,
-                    behavior: 'smooth'
-                });
+        document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+            link.addEventListener('click', function (e) {
+                var id = this.getAttribute('href');
+                if (id.length > 1) {
+                    var el = document.querySelector(id);
+                    if (el) {
+                        e.preventDefault();
+                        window.scrollTo({ top: el.offsetTop - 16, behavior: 'smooth' });
+                    }
+                }
             });
         });
-    </script>   
+    </script>
 </body>
 </html>

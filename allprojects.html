@@ -2,12 +2,374 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>All Projects</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
+    <meta name="description" content="All projects — MPMS v3, Coders for Causes, ProveIt, MIDI Melody Generator, portfolio, Raspberry Pi plant waterer.">
+    <title>All projects — Oliver King</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
+        :root {
+            --primary: #2d4c2a;
+            --yellow: #ff9216;
+            --accent: #708367;
+            --secondary: #ffb20d;
+            --dark: #2a4c30;
+            --text: #333333;
+            --light: #F9F9F9;
+            --sidebar-width: 70px;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.65;
+            color: var(--text);
+            background-color: var(--yellow);
+        }
+
+        a { color: var(--primary); font-weight: 600; text-decoration: none; }
+        a:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: var(--sidebar-width);
+            height: 100vh;
+            background-color: var(--primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 80px;
+            z-index: 100;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar-icon {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-bottom: 25px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            background-color: rgba(255, 255, 255, 0.05);
+            transition: all 0.35s ease;
+            text-decoration: none;
+        }
+
+        .sidebar-icon:hover {
+            background-color: var(--accent);
+            transform: scale(1.08);
+        }
+
+        .main-wrap {
+            margin-left: var(--sidebar-width);
+            min-height: 100vh;
+        }
+
+        .page-hero {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--yellow) 100%);
+            padding: 3rem 1.5rem 2.5rem;
+            padding-left: calc(var(--sidebar-width) + 1.5rem);
+        }
+
+        .page-hero h1 {
+            font-size: clamp(2rem, 5vw, 2.75rem);
+            color: var(--dark);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 0.75rem;
+        }
+
+        .page-hero p.lead {
+            max-width: 42rem;
+            color: rgba(42, 76, 48, 0.92);
+            font-size: 1.1rem;
+        }
+
+        .breadcrumb {
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            color: rgba(42, 76, 48, 0.8);
+        }
+
+        .breadcrumb a { font-weight: 600; }
+
+        .toc {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+            padding-left: calc(var(--sidebar-width) + 1.5rem);
+        }
+
+        .toc h2 {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--dark);
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--accent);
+            padding-left: 0.75rem;
+        }
+
+        .toc ul {
+            list-style: none;
+            display: grid;
+            gap: 0.5rem;
+        }
+
+        .toc a {
+            display: block;
+            padding: 0.5rem 0.75rem;
+            background: rgba(255, 255, 255, 0.55);
+            border-radius: 8px;
+            border: 1px solid rgba(45, 76, 42, 0.15);
+            transition: var(--transition);
+        }
+
+        .toc a:hover {
+            background: white;
+            transform: translateX(4px);
+            text-decoration: none;
+        }
+
+        .content {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 1.5rem 4rem;
+            padding-left: calc(var(--sidebar-width) + 1.5rem);
+        }
+
+        article.project-block {
+            background: white;
+            border-radius: 12px;
+            padding: 1.75rem 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(45, 76, 42, 0.12);
+        }
+
+        article.project-block h2 {
+            font-size: 1.35rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            padding: 0.25rem 0.6rem;
+            border-radius: 999px;
+            background: var(--secondary);
+            color: var(--dark);
+        }
+
+        .badge.team { background: var(--accent); color: white; }
+        .badge.solo { background: var(--primary); color: white; }
+        .badge.wip { background: #c45c26; color: white; }
+
+        article.project-block p {
+            margin-bottom: 0.85rem;
+            color: #444;
+        }
+
+        article.project-block p:last-child { margin-bottom: 0; }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 1rem;
+        }
+
+        .tags span {
+            font-size: 0.78rem;
+            font-weight: 600;
+            padding: 0.3rem 0.65rem;
+            background: var(--light);
+            color: var(--dark);
+            border-radius: 999px;
+            border: 1px solid rgba(45, 76, 42, 0.15);
+        }
+
+        .actions {
+            margin-top: 1.25rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white !important;
+            padding: 10px 18px;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.04em;
+            border-radius: 4px;
+            transition: var(--transition);
+            text-decoration: none !important;
+        }
+
+        .btn:hover {
+            background-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .site-footer {
+            text-align: center;
+            padding: 2rem 1rem 3rem;
+            padding-left: calc(var(--sidebar-width) + 1rem);
+            font-size: 0.95rem;
+            color: rgba(42, 76, 48, 0.85);
+        }
+
+        @media (max-width: 576px) {
+            .page-hero, .toc, .content {
+                padding-left: 1rem;
+            }
+            .main-wrap {
+                margin-left: 0;
+                padding-top: 0;
+            }
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+                flex-direction: row;
+                justify-content: center;
+                flex-wrap: wrap;
+                padding: 12px 8px;
+                gap: 8px;
+            }
+            .sidebar-icon { margin-bottom: 0; }
+        }
+    </style>
+</head>
 <body>
-    <h1>All Projects</h1>
-    <p>Currently in development...</p>
+    <div class="sidebar">
+        <a href="index.html" class="sidebar-icon" title="Home">🏠</a>
+        <a href="allprojects.html" class="sidebar-icon" title="All projects">📆</a>
+        <a href="https://open.spotify.com/artist/6WcwmDXRJDJet6lRDJfmK9?si=zlvEQT4RS2asMZ7PPx3yYg" class="sidebar-icon" target="_blank" rel="noopener noreferrer" title="Music">🎵</a>
+        <a href="aboutme.html" class="sidebar-icon" title="About">🙋‍♂️</a>
+    </div>
+
+    <div class="main-wrap">
+        <header class="page-hero">
+            <nav class="breadcrumb"><a href="index.html">Home</a> / All projects</nav>
+            <h1>All projects</h1>
+            <p class="lead">Team work from university and competitive placements, solo full-stack builds, and one hardware experiment in progress.</p>
+        </header>
+
+        <nav class="toc" aria-label="On this page">
+            <h2>Jump to</h2>
+            <ul>
+                <li><a href="#mpms">MPMS v3 — medical simulation (Uni / team)</a></li>
+                <li><a href="#coders">Coders for Causes (Uni / team)</a></li>
+                <li><a href="#proveit">ProveIt (Solo)</a></li>
+                <li><a href="#midi">MIDI Melody Generator (Solo)</a></li>
+                <li><a href="#portfolio">Portfolio website (Solo)</a></li>
+                <li><a href="#plant-waterer">Raspberry Pi plant waterer (In progress)</a></li>
+            </ul>
+        </nav>
+
+        <div class="content">
+            <article id="mpms" class="project-block">
+                <h2>MPMS v3 <span class="badge team">Uni / team</span></h2>
+                <p>Built for a university research client studying clinician attention and multitasking in high-pressure environments. The app simulates dozens of concurrent patients simultaneously, each with live waveform animations running at 60fps and microsecond-accuracy interaction logging to capture exactly when and how clinicians respond to alerts.</p>
+                <p>Implemented a binaural audio alert system using the Web Audio API &mdash; different sounds in each ear to help clinicians distinguish between patients without looking. Per-patient configurable thresholds, drag-and-drop layout editor, and a medical-grade UI.</p>
+                <p>Led a 6-person Agile team.</p>
+                <div class="tags">
+                    <span>React</span>
+                    <span>TypeScript</span>
+                    <span>Electron</span>
+                    <span>Web Audio API</span>
+                    <span>Research UX</span>
+                </div>
+            </article>
+
+            <article id="coders" class="project-block">
+                <h2>Coders for Causes <span class="badge team">Uni / team</span></h2>
+                <p>Won a competitive summer placement through an interview process to join a 15-member Agile team building a website for a game development organisation. Engineered the &ldquo;About Us&rdquo; and &ldquo;Committee&rdquo; modules, handling both frontend and backend, using professional Git workflows including branching, PRs, and code review.</p>
+                <div class="tags">
+                    <span>Agile</span>
+                    <span>Full-stack</span>
+                    <span>Git</span>
+                </div>
+            </article>
+
+            <article id="proveit" class="project-block">
+                <h2>ProveIt <span class="badge solo">Solo</span></h2>
+                <p>A full-stack task-tracking and verification system built to solve a real gap in how teams confirm work is actually done. Features hierarchical approval chains &mdash; tasks require sign-off from multiple levels &mdash; a relational database managing complex task/user relationships, and secure file upload validation so evidence can be attached to completed tasks.</p>
+                <div class="tags">
+                    <span>Full-stack</span>
+                    <span>Relational DB</span>
+                    <span>Security</span>
+                    <span>Approval workflows</span>
+                </div>
+            </article>
+
+            <article id="midi" class="project-block">
+                <h2>MIDI Melody Generator <span class="badge solo">Solo</span></h2>
+                <p>An algorithmic composition tool that generates unique musical sequences using programmatic logic rather than pre-recorded samples. Optimised the processing pipeline to run 30% faster, achieving real-time MIDI output. Built out of a genuine interest in the intersection of code and music theory.</p>
+                <div class="actions">
+                    <a class="btn" href="midi_generator.html">Open MIDI tool</a>
+                </div>
+                <div class="tags">
+                    <span>Algorithms</span>
+                    <span>Performance</span>
+                    <span>MIDI</span>
+                    <span>Music theory</span>
+                </div>
+            </article>
+
+            <article id="portfolio" class="project-block">
+                <h2>Portfolio website <span class="badge solo">Solo</span></h2>
+                <p>This multi-page portfolio &mdash; lightweight HTML, CSS, and JavaScript with small interactive details &mdash; hosted on Render at <a href="https://oliland.onrender.com" target="_blank" rel="noopener noreferrer">oliland.onrender.com</a>.</p>
+                <div class="actions">
+                    <a class="btn" href="https://oliland.onrender.com" target="_blank" rel="noopener noreferrer">Live site</a>
+                    <a href="index.html">Home</a>
+                </div>
+                <div class="tags">
+                    <span>HTML/CSS/JS</span>
+                    <span>Render</span>
+                </div>
+            </article>
+
+            <article id="plant-waterer" class="project-block">
+                <h2>Raspberry Pi plant waterer <span class="badge wip">In progress</span></h2>
+                <p>A real-time soil moisture monitoring and automated irrigation system running on a Raspberry Pi Zero 2W. Uses two STEMMA soil sensors feeding into a 4-channel relay module controlling four mini submersible pumps. Designed to water plants only when soil moisture drops below a set threshold, targeting meaningful water reduction over a timer-based approach.</p>
+                <p>Hardware assembly underway &mdash; replacement Pi pending after a dead-on-arrival unit.</p>
+                <div class="tags">
+                    <span>Raspberry Pi</span>
+                    <span>IoT</span>
+                    <span>Python</span>
+                    <span>STEMMA sensors</span>
+                    <span>Relay module</span>
+                </div>
+            </article>
+        </div>
+
+        <footer class="site-footer">
+            <p><a href="index.html">← Back to home</a> · <a href="aboutme.html">About</a> · <a href="https://oliland.onrender.com">oliland.onrender.com</a></p>
+        </footer>
+    </div>
 </body>
 </html>
