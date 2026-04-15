@@ -102,6 +102,13 @@
             z-index: 5;
         }
 
+        /* Main column sits right of the fixed sidebar; shift half a sidebar width so
+           headings and content optically center in the viewport (fixes wide / 2K screens). */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            transform: translateX(calc(var(--sidebar-width) / -2));
+        }
+
         /* Left Sidebar */
         .sidebar {
             position: fixed;
@@ -220,7 +227,7 @@
         }
 
         .hero h1 {
-            font-size: 12vw;
+            font-size: clamp(3rem, 12vw, 11rem);
             font-weight: 900;
             line-height: 1;
             color: var(--primary);
@@ -418,7 +425,7 @@
             width: 100%;
             max-width: 1200px; /* Set a maximum width */
             margin: 0 auto; /* Auto margins for centering */
-            padding: 0 20px 0 calc(var(--sidebar-width) + 20px); /* Account for sidebar */
+            padding: 0 20px;
         }
 
         .projects-category {
@@ -449,7 +456,7 @@
             .projects-grid {
                 grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
                 max-width: 800px;
-                padding: 0 20px 0 calc(var(--sidebar-width) + 10px);
+                padding: 0 20px;
             }
         }
 
@@ -457,14 +464,14 @@
             .projects-grid {
                 grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
                 max-width: 600px;
-                padding: 0 20px 0 calc(var(--sidebar-width) + 10px);
+                padding: 0 20px;
             }
         }
 
         @media (max-width: 576px) {
             .projects-grid {
                 grid-template-columns: 1fr; /* Single column on very small screens */
-                padding: 0 15px 0 calc(var(--sidebar-width) + 5px);
+                padding: 0 15px;
             }
 
             :root {
@@ -727,7 +734,6 @@
 
         .site-footer {
             padding: 3rem 20px 4rem;
-            padding-left: calc(var(--sidebar-width) + 20px);
             text-align: center;
             font-size: 0.95rem;
             color: rgba(42, 76, 48, 0.85);
@@ -793,7 +799,7 @@
         </a>
     </div>
 
-    <div style="margin-left: var(--sidebar-width);">
+    <div class="main-content">
         <header class="container">
             <a href="allprojects.html" class="buy-tickets-btn slide-in-left">view all my projects</a>
             <div class="logo scale-in">
